@@ -4,8 +4,7 @@
 
 ### 1. Open Module 1
 Navigate to `module1/` folder and start with:
-- **README.md** - Module overview
-- **quick_reference.md** - Key concepts
+- **concepts.md** - Lesson notes (what is prompt engineering, how LLMs process prompts, the structure template, common pitfalls)
 
 ### 2. Complete the Lab
 Open `lab.md` and follow the instructions to:
@@ -14,29 +13,25 @@ Open `lab.md` and follow the instructions to:
 - Compare outputs
 
 ### 3. Do the Exercises
-Open `exercises.md` and complete:
+Open `exercises_and_challenges.md` and complete:
 - Fill-in-the-pattern templates
 - Fix-the-prompt activities
-
-### 4. Attempt the Challenge
-Open `challenge.md` and try to fix all 3 broken prompts before checking solutions.
+- The Challenge (fix 3 broken prompts)
 
 ## File Navigation
 
 ### Main Entry Points:
 ```
-module1/README.md          # Start here
-module1/quick_reference.md # Key concepts
-module1/lab.md            # Hands-on activity
-module1/exercises.md      # Practice problems
-module1/challenge.md      # Advanced challenge
+module1/QUICK_START.md        # This guide (start here)
+module1/concepts.md           # Lesson notes
+module1/lab.md                # Hands-on activity
+module1/exercises_and_challenges.md  # Practice problems + challenge
 ```
 
-### Solutions (check after attempting):
-```
-module1/solutions/exercise_solutions.md
-module1/solutions/challenge_solutions.md
-```
+### Lab Details (from `lab.md`):
+- Write a vague prompt and a specific prompt
+- Run both and compare outputs
+- Note what the lab asks you to observe about the difference
 
 ## Time Estimates
 - **Quick overview**: 10 minutes
@@ -55,11 +50,11 @@ module1/solutions/challenge_solutions.md
 ## Next Steps After Module 1
 1. Practice with your own prompts
 2. Apply techniques to real tasks
-3. Move to Module 2 (when available)
-4. Join prompt engineering communities
+3. Move on to Module 2: Prompting Techniques Taxonomy
+4. As you progress, use `course_reference/reusable_exercise_patterns.md` to understand what each exercise type is testing
 
 ## Need Help?
-- Check `quick_reference.md` for formulas
-- Review solutions for explanations
+- Re-read `concepts.md` for the key takeaways and formulas
+- Work through the exercises again with your own scenarios
 - Practice with similar examples
 - Experiment with different approaches
