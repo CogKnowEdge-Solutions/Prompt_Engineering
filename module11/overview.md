@@ -1,6 +1,6 @@
 # Module 11: Capstone Project
 
-**Overview | Estimated time: 15-20 min read, plus project time** | **Prerequisite: All prior modules**
+**Estimated time: 15-20 min read, plus project time** | **Prerequisite: All prior modules**
 
 Every module so far has practiced one skill in isolation. The capstone is where that stops — you'll build one complete, working prompt system and put it through the same rigor a real production team would: designed deliberately, evaluated against a real dataset, red-teamed against real attack patterns, and documented well enough that someone else could pick it up and understand your decisions.
 
@@ -48,4 +48,4 @@ flowchart LR
 3. **Red-team report** — documented attack attempts and the patches that resulted, using Module 8's framework.
 4. **Presentation/review** — a walkthrough of your system and your iteration history (Module 10), not just the finished prompts — the reasoning matters as much as the result.
 
-See [track_options.md](./track_options.md) for track options, [deliverable_requirements.md](./deliverable_requirements.md) for detailed requirements per deliverable, and [submission_checklist.md](./submission_checklist.md) for the final submission checklist and grading rubric.
+See [track_options.md](./track_options.md) for track options, [deliverable_requirements.md](./deliverable_requirements.md) for detailed requirements per deliverable, [submission_checklist.md](./submission_checklist.md) for the final submission checklist and grading rubric — and [project_roadmap.md](./project_roadmap.md) for a suggested timeline, milestone checkpoints, and a worked example to calibrate scope.

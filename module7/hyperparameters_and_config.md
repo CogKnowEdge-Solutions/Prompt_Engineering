@@ -37,11 +37,11 @@ flowchart LR
 
 | Range | Typical use |
 |-------|-------------|
-| 0.0 - 0.3 | Deterministic: factual answers, code generation |
+| 0.0 - 0.3 | Near-deterministic: factual answers, code generation |
 | 0.4 - 0.7 | Balanced: general-purpose output |
 | 0.8+ | Creative: brainstorming, variation |
 
-*(Edits that deepen this: mention that code at 0 is the common default, and that even temperature 0 isn't a guarantee of identical output.)*
+*(Code generation commonly runs at 0.0 — but even 0.0 isn't a guarantee of byte-identical output across runs or model versions. For stronger best-effort reproducibility, use `seed` (7.3).)*
 
 ### Top-P (Nucleus Sampling)
 
@@ -140,9 +140,42 @@ One of the highest-leverage cost levers on longer or repeated prompts. When part
 
 **The catch:** caching is sensitive to exact configuration. Changing reasoning effort between calls, or restructuring where shared content sits in the prompt, can silently break the cache hit and quietly cost you the savings.
 
+### A cost worked example (illustrative)
+
+Rough numbers (updated pricing varies by provider and by month — this is for the shape of the thinking, not for quoting):
+
+| | Input tokens | Output tokens | Rate (input / output) | Cost per call |
+|--|--------------|---------------|----------------------|---------------|
+| Long-context call (cached) | 40,000 system doc (cached) + 2,000 new | 800 | ~$0.10 / ~$0.40 per 1M | ~$0.0005 |
+| Same, cache miss | 42,000 uncached | 800 | ~$0.10 / ~$0.40 per 1M | ~$0.0045 |
+| Same, long output (5,000 tokens) | 42,000 uncached | 5,000 | ~$0.10 / ~$0.40 per 1M | ~$0.006 |
+| Same, with reasoning effort high | 42,000 + ~15,000 hidden thinking | 5,000 | ~$0.10 / ~$0.40 per 1M | ~$0.009 |
+
+Three takeaways that generalize: (1) a cache hit on a long shared system prompt can cut per-call cost by an order of magnitude; (2) output (and hidden thinking) tokens often cost more per token than input — trimming output buys more than trimming input; (3) at high volume even "small" differences matter — a $0.0045→$0.0005 saving on a single call is 9x on millions of calls. Estimate against your provider's current published rates before choosing a plan.
+
 ---
 
-## 7.5 Putting It Together
+## 7.5 Parameter Names Across Providers
+
+Every provider exposes the same underlying concepts, but names and behavior differ. The table maps the common ones — **always verify against your provider's current reference docs before relying on any of these names**, since APIs change frequently.
+
+| Concept | OpenAI | Anthropic Claude | Google Gemini | Notes |
+|---------|--------|------------------|---------------|-------|
+| Temperature | `temperature` | `temperature` | `temperature` | Same name, meaning mostly consistent |
+| Top-p | `top_p` | `top_p` | `top_p` | Also `top_k` for the fixed-pool cutoff |
+| Max output tokens | `max_tokens` / `max_completion_tokens` | `max_tokens` (Claude API historically uses *max_tokens to sample*) | `maxOutputTokens` | Verify units — some newer models count every token |
+| Stop condition | `stop` | `stop_sequences` | `stopSequences` | Not supported on all reasoning models |
+| JSON-ish constraint | `response_format` | `structured_outputs`/tool-use | `responseMimeType` (`application/json`) / `responseSchema` | Different strengths — see Module 6 |
+| Reasoning control | `reasoning_effort` (o-series) | `thinking` (`enabled`, `budget_tokens`) | `thinkingConfig` (`thinking_budget`) | How much hidden reasoning is spent |
+| Randomness seed | `seed` | (not a first-class param) | (not a first-class param) | Best-effort reproducibility, not a guarantee |
+| Penalties | `presence_penalty`, `frequency_penalty` | — | (not first-class, via sampling params) | Often absent outside OpenAI-style APIs |
+| Caching | automatic/v4 caching | `cache_control` on blocks | automatic | Mismatched config silently misses the cache (7.4) |
+
+**The practical lesson:** your prompt code should be written against *your* provider's parameters, not a generic mental model of "the" API. Three things travel well between providers — the *values you set* (0.3 vs 0.9 is a meaningful decision everywhere), the *reproducibility expectation* (seed is never a hard guarantee anywhere), and the *trade-off logic* (hot vs cold from 7.4). Names and exact semantics don't travel — look them up.
+
+---
+
+## 7.6 Putting It Together
 
 Real-world configs mix these dials deliberately. Two contrasting examples:
 

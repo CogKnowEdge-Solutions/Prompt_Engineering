@@ -4,7 +4,7 @@
 
 ### 1. Open Module 1
 Navigate to `module1/` folder and start with:
-- **concepts.md** - Lesson notes (what is prompt engineering, how LLMs process prompts, the structure template, common pitfalls)
+- **foundations.md** - Lesson notes (what is prompt engineering, how LLMs process prompts, the structure template, common pitfalls)
 
 ### 2. Complete the Lab
 Open `lab.md` and follow the instructions to:
@@ -23,7 +23,7 @@ Open `exercises_and_challenges.md` and complete:
 ### Main Entry Points:
 ```
 module1/QUICK_START.md        # This guide (start here)
-module1/concepts.md           # Lesson notes
+module1/foundations.md        # Lesson notes
 module1/lab.md                # Hands-on activity
 module1/exercises_and_challenges.md  # Practice problems + challenge
 ```
@@ -54,7 +54,7 @@ module1/exercises_and_challenges.md  # Practice problems + challenge
 4. As you progress, use `course_reference/reusable_exercise_patterns.md` to understand what each exercise type is testing
 
 ## Need Help?
-- Re-read `concepts.md` for the key takeaways and formulas
+- Re-read `foundations.md` for the key takeaways and formulas
 - Work through the exercises again with your own scenarios
 - Practice with similar examples
 - Experiment with different approaches

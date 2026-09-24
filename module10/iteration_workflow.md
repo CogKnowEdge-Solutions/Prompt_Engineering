@@ -1,6 +1,6 @@
 # Module 10: Iteration Workflow
 
-**Lesson | Estimated time: 40-45 min** | **Prerequisite: Modules 8 and 9**
+**Estimated time: 40-45 min** | **Prerequisite: Modules 8 and 9**
 
 This module ties everything together. Modules 1-7 gave you techniques; Module 8 gave you security; Module 9 gave you evaluation. None of that matters if changes to a prompt happen ad hoc — edited in place, untracked, with no way to tell what changed or roll back when something breaks. This module covers turning prompting into a repeatable process rather than a one-off craft.
 
@@ -229,6 +229,47 @@ flowchart TD
 
 ---
 
+## 10.9 Templates & a 30-Second Git Walkthrough
+
+Two practical aids to make 10.8 habit-size.
+
+### A version-log row
+
+For a registry-style setup (10.3), log one row per version. A minimal, greppable format that captures the "what/why/result" loop:
+
+```
+| v1.4.2 | 2026-08-14 | Rollout docs: +1 worked example for ambiguous IDs (FIX-221) |
+  Result: v1.4.1..v1.4.2 +6.2% precise-scoring on golden β-set; +3 facts |
+  Rejects: v1.4.1desc (reword intro) -1.4%, v1.4.1c (shorter ex) neutral |
+```
+
+### A commit message template
+
+Good squashed-commit messages make the loop legible to future you:
+
+```
+[pv]: <short imperative summary>
+
+What: <the one isolated change>
+Why:  <the hypothesis it tests>
+Result: <eval before -> after, with which dataset>
+Tests: <eval suite + adversarial set names, versions>
+```
+
+### The 30-second git walkthrough
+
+When you don't need a full registry, this is enough process to stay safe:
+
+1. **Branch** — `git checkout -b pv/rollout-docs`
+2. **Edit one file, one change** — the prompt text, and only that
+3. **Run the loop** — your Module 9 suite and Module 8 adversarial set against *both* old and new
+4. **Commit with the template** — squash-commit message covers what/why/result
+5. **Merge to main on evidence** — only when step 3's comparison supports it, then tag (e.g. `pv-1.4.2`)
+
+This mirrors the repo architecture of 10.3 and gives you 10.4's properties — tracked, reviewed, tested, versioned, rollbackable — with zero new infrastructure. Whatever you adopt, keep it registry-parity-clean: never edit a prompt in place and call it the next version.
+
+---
+
 ## Key Takeaways
 
 1. **Ad hoc prompt editing is a production risk** — a single untracked change can silently degrade thousands of live interactions
@@ -239,3 +280,4 @@ flowchart TD
 6. **Evaluation decides promotion** — versioning without it is just record-keeping
 7. **Re-test security on every version** — unrelated wording changes can silently reopen closed gaps
 8. **Iterate in a documented loop** — one hypothesis, one isolated change, measured comparison, and a record of every attempt, including failures
+9. **Process this small is enough** — a branch, one-change edit, run against both versions, templated commit, merge on evidence — no new infrastructure needed

@@ -136,6 +136,28 @@ Given the mixed research, roles are often unnecessary. Skip them when:
 - **Accuracy is the priority** and you have no evidence a persona helps (test it rather than assume)
 - **The domain is high-stakes** — an authoritative-sounding role risks over-trust more than it adds value
 
+A quick way to weigh the decision:
+
+```mermaid
+flowchart TD
+    classDef blue fill:#bfdbfe,stroke:#1d4ed8,color:#111827,stroke-width:2px;
+    classDef yellow fill:#fde68a,stroke:#b45309,color:#111827,stroke-width:2px;
+    classDef green fill:#bbf7d0,stroke:#15803d,color:#111827,stroke-width:2px;
+    classDef gray fill:#e2e8f0,stroke:#334155,color:#111827,stroke-width:2px;
+    A[Do I need a specific tone or perspective?] --> B{Simple lookup<br/>or calculation?}
+    A --> C{Accuracy-critical<br/>or high-stakes?}
+    B -- Yes --> D[Skip the persona<br/>tone doesn't matter]
+    C -- Yes --> E[Skip / use weak persona +<br/>over-trust warning]
+    B -- No --> F{Differentiator?<br/>persona matches audience}
+    C -- No --> F
+    F -- No --> G[Skip the persona]
+    F -- Yes --> H[Use specific persona<br/>then A-B it against none]
+    class A blue;
+    class B,C yellow;
+    class D,G gray;
+    class E,H green;
+```
+
 A quick test that settles most debates: run the task once with the persona and once without, and compare. If the difference is only cosmetic, drop it.
 
 ---

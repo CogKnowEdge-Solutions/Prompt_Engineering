@@ -1,6 +1,6 @@
 # Module 8: Prompt Security — Injection & Jailbreaking
 
-**Lesson | Estimated time: 55-65 min** | **Prerequisite: Module 5**
+**Estimated time: 55-65 min** | **Prerequisite: Module 5**
 
 Every technique so far has assumed a cooperative user. This module covers what happens when input to your prompt — from a user, or from content your system retrieves — is actively trying to make the model misbehave. This is a live, currently top-ranked production risk: prompt injection has ranked #1 on the OWASP Top 10 for LLM Applications across the 2025 and 2026 editions, and multiple critical, named vulnerabilities against real production AI products in 2025-2026 confirm it's actively exploited, not theoretical.
 
@@ -236,6 +236,28 @@ flowchart LR
 
 ---
 
+## 8.9 Practical Notes: Tools and RAG-Specific Risks
+
+### Automated red-teaming tools
+
+The manual recognition practice in this module's lab is the essential skill — but for *breadth* and *regression coverage*, use automated scanners. Tools like **garak**, **PyRIT**, and **Giskard** run reusable attack suites (injection, jailbreak, data-leakage prompts) against your system and report what passes. See `course_reference/tooling.md` for a current index and picking advice.
+
+Three rules for automated tools:
+1. **They're regression tests, not certifications** — a green scanner run proves nothing about a novel attack someone rephrases tomorrow
+2. **Breadth is not depth** — scanners cover known categories; your Module 8 judgment catches what the catalog doesn't
+3. **Re-run on every version change** — tie the scan to your CI and to the Module 10 version loop, not to launch day
+
+### RAG and retrieval-specific risks
+
+If your system retrieves documents (Module 2's RAG — LLM04), two risks deserve special attention:
+
+- **Retrieval injection is silent** — the malicious instructions sit inside documents the system itself pulls in; no user interaction required. The retrieved corpus is untrusted input and needs the same segregation as direct user input (8.7).
+- **RAG poisoning** — attackers modify the *source* documents (a public wiki, an ingested inbox, a shared drive) rather than the prompt. For many systems this is the easiest injection point available. Monitor your sources for unexpected changes, and don't let retrieved content silently escalate privileges.
+
+The defense is the same architecture as elsewhere — treat every retrieved document as untrusted content, keep it visually and structurally distinct from instructions, and authenticate sources that can change the system's behavior.
+
+---
+
 ## Key Takeaways
 
 1. **Injection is structural, not a one-time bug** — with no hard code/data boundary, design the surrounding system to *contain* successful injections
@@ -246,3 +268,4 @@ flowchart LR
 6. **Jailbreaks follow recognizable patterns** — reframing, erosion, obfuscation, authority framing — and shift constantly
 7. **Defense in depth wins** — hierarchy, segregation, least privilege, output validation, human-in-the-loop, independent enforcement
 8. **Treat prompt security as maintenance** — absence of public incidents can mean defenses are absorbing attempts, not that the risk is gone
+9. **Automate breadth, keep judgment for depth** — red-team scanners are regression tests, not certifications; watch retrieved content as an injection surface

@@ -1,6 +1,6 @@
 # Module 9: Prompt Evaluation
 
-**Lesson | Estimated time: 45-50 min** | **Prerequisite: Module 6**
+**Estimated time: 45-50 min** | **Prerequisite: Module 6**
 
 "It seems to work" is not evaluation — it's a vibe check, and vibe checks miss regressions until a user hits them in production. This module covers how to actually measure whether a prompt works: building test data, scoring output at scale, and catching problems before they ship rather than after.
 
@@ -59,6 +59,35 @@ flowchart LR
 Once you have more test cases than a human can practically grade one by one, the standard approach is using a capable LLM to score another model's output against a rubric you define — covering criteria like factual accuracy, relevance, coherence, and safety. This scales far better than human review and works even on open-ended tasks with no single correct answer.
 
 **The real risk: judge bias.** LLM judges have documented systematic biases — notably favoring longer or more confident-sounding responses regardless of actual quality. An unvalidated judge can reward verbose, hedge-free answers over concise, appropriately-uncertain ones. The standard mitigation: **calibrate your judge against human labels before trusting it at scale.** Run the judge on the same human-graded examples from 9.2, and check agreement — current practice targets roughly 85-90% agreement between the judge and human reviewers before that judge is trusted to gate real deployments. Below that, refine the judge's rubric prompt (make criteria more specific, give few-shot examples of good/bad scoring) and re-calibrate.
+
+**A judge prompt template to start from** (adapt the rubric and criteria to your task):
+
+```
+You are scoring an AI response against a rubric. Score each criterion
+0-5 with a one-line justification. Be strict: a response that is longer
+or more confident is NOT better by itself.
+
+Criteria:
+1. Factual accuracy — are claims correct and grounded in the provided context?
+2. Completeness — does it answer the specific question asked?
+3. Relevance — does it stay on-topic without padding?
+4. Appropriate hedging — does it express appropriate uncertainty where facts are unclear?
+
+Scoring rubric:
+0 = fails completely   1 = mostly wrong   2 = partially right
+3 = adequate   4 = good   5 = excellent
+
+Output ONLY valid JSON:
+{"scores": {"accuracy": 0, "completeness": 0, "relevance": 0, "hedging": 0},
+ "total": 0, "justifications": {"accuracy": "...", "completeness": "...",
+ "relevance": "...", "hedging": "..."}}
+
+Context: {{PROVIDED_CONTEXT}}
+Question: {{QUESTION}}
+Response: {{RESPONSE}}
+```
+
+Note the built-in bias guardrails: explicit "longer/confident ≠ better" instruction, and a per-criterion justification so a wrong "4/5" is auditable rather than a bare number.
 
 ```mermaid
 flowchart TD
@@ -195,6 +224,32 @@ flowchart TD
 
 ---
 
+## 9.8 Drift Detection
+
+**Definition:** a score change with no obvious cause. When your production monitoring (9.4 stage 4) suddenly moves, the question is *which* kind of drift you're seeing — they need different responses.
+
+**Output drift** — the model changed underneath you:
+- Symptoms: same inputs decoded a month apart score differently with no code change
+- Usual cause: the provider silently changed or re-released the model, or you hit an automatic upgrade (uncacheable prefixes in Module 7 change, thinking behavior shifts, tokenizer version changes)
+- Response: pin the model version if you can, run your 9.6 golden dataset snapshot *unchanged* against the new model, and A/B before migrating
+
+**Input drift** — the world changed, not the model:
+- Symptoms: scores move on *new* inputs while older, unchanged inputs score the same
+- Usual cause: real traffic changed (new user behavior, different document corpus, a seasonal shift) and your assumptions from 9.2 no longer hold
+- Response: sample the new traffic, find the failing patterns, add them to the golden dataset, and re-calibrate your judge if the input distribution changed enough to skew it
+
+**A quick heuristic for triage:**
+
+```
+Do unchanged inputs (re-instrumented) still score the same?
+├─ Yes → the model behaves the same → INPUT DRIFT (traffic changed)
+└─ No  → the model behaves differently → OUTPUT DRIFT (model changed)
+```
+
+Whichever it is, the fix is a characterization pass — version-pinned (9.6), measured, and fed back into the pipeline. You can't fix a drift you haven't classified. There's a fuller index of monitoring/experimentation tooling in `course_reference/tooling.md`.
+
+---
+
 ## Key Takeaways
 
 1. **Sanity checks are not quality evaluation** — run cheap, deterministic checks first, judged scoring only on what passes
@@ -205,3 +260,4 @@ flowchart TD
 6. **Offline evaluation isn't enough** — A/B test on live traffic and canary-roll changes that look good offline
 7. **Version everything** — dataset, prompt, model, parameters, judge, retrieval — or you can't trust a score change
 8. **Match effort to risk** — a wording tweak, a model migration, and a safety change demand very different evaluation depth
+9. **Classify drift before fixing it** — unchanged inputs scoring the same means input drift, not output drift; they need different responses

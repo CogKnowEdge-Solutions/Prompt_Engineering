@@ -29,7 +29,7 @@ the right category on those cases.]
 ```
 *(Write your own — be specific.)*
 
-**2. Your one change (flush in the version diff below):**
+**2. Your one change (fill in the version diff below):**
 ```
 [v2 prompt - paste the full new prompt]
 ```
@@ -68,7 +68,7 @@ the right category on those cases.]
 information should stop confident invention on no-answer tickets]
 ```
 
-**2. Your one change (flush the version diff below):**
+**2. Your one change (fill in the version diff below):**
 ```
 [v3 prompt - paste the full new prompt]
 ```
@@ -105,7 +105,7 @@ information should stop confident invention on no-answer tickets]
 
 ## Iteration 3: v3 → v4 (Worst Case, Roll Back)
 
-This time the hypothesis is wrong. Purposefully make a change you **expect** to fail on one dimension (e.g., remove the few-shot example to shorten the prompt), then run the loop anyway — and roll back using 10.2's immutable version artfact.
+This time the hypothesis is wrong. Purposefully make a change you **expect** to fail on one dimension (e.g., remove the few-shot example to shorten the prompt), then run the loop anyway — and roll back using 10.2's immutable version artifact.
 
 **1. Hypothesis (a deliberately risky one):**
 ```

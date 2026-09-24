@@ -215,13 +215,56 @@ Useful when tone and format both matter.
 [Response]: 5-tweet thread with hashtags
 ```
 
-You don't need to memorize all of these — pick one that matches your task and fill in the blanks.
+### CRISPE — Capacity, Insight, Statement, Personality, Experiment
+
+Geared toward creative, opinionated outputs with variations.
+
+```
+[Capacity]: Your role / area of expertise
+[Insight]: Background context and motivation for the task
+[Statement]: The task or deliverable you want
+[Personality]: The style, tone, or voice for the response
+[Experiment]: Ask for multiple variants or revisions
+
+Example:
+[Capacity]: A senior brand copywriter
+[Insight]: We're launching a plant-based protein bar at a budget price point
+[Statement]: Write a product description for the bar's website
+[Personality]: Friendly, energetic, no food-industry jargon
+[Experiment]: Give me 3 variants, each with a different angle
+```
+
+### TAG — Task, Action, Goal
+
+A minimal three-part structure for fast, constrained requests (great for automation-style prompts).
+
+```
+[Task]: Categorize this support email
+[Action]: Return one of [billing, technical, account, general]
+[Goal]: So it routes to the right team automatically
+
+Email: {{EMAIL}}
+```
+
+### Which framework to pick?
+
+| Framework | When it fits | Emphasizes |
+|-----------|--------------|------------|
+| APE | Any quick task | Action → Purpose → Expectation |
+| RACE | Work tasks with an explicit role | Role → Action → Context → Expectation |
+| CO-STAR | When tone and format both matter | Context → Objective → Style → Tone → Audience → Response |
+| CRISPE | Creative, multi-variant outputs | Role → Insight → Statement → Personality → Experiment |
+| TAG | Fast, constrained classification/automation | Task → Action → Goal |
+
+You don't need to memorize all of these — pick one that matches your task and fill in the blanks. (You can also mix and match the *fields* rather than memorizing a framework; the underlying principle is always the same: state the task, give the goal, set expectations.)
 
 ---
 
 ## 6. Self-Consistency
 
 **Definition**: Running the same prompt multiple times and selecting the most common answer.
+
+*(Deeper treatment — including when the extra cost is actually worth it — arrives in Module 4.2.)*
 
 **How it works**: Generate multiple responses, then take the majority vote.
 
@@ -297,6 +340,8 @@ Answer: The population of Paris (capital of France) is approximately 2.1 million
 ## 8. Tree-of-Thought (ToT)
 
 **Definition**: Exploring multiple reasoning paths simultaneously and evaluating them.
+
+*(Module 4.3 grows this into the full picture — branch exploration, pruning, and an honest cost analysis.)*
 
 **How it works**: Instead of one linear chain, the model branches into multiple possibilities and backtracks when needed.
 
@@ -377,6 +422,8 @@ Please improve this prompt by:
 - Requires understanding of what makes prompts good
 - May need multiple iterations
 - Quality depends on meta-prompt quality
+
+**Going further:** meta-prompting is also the foundation of automated prompt optimization. Methods like OPRO have an LLM propose candidate prompts, score them against a target, and refine the winners in a loop — turning prompt improvement into an optimization problem. The measurement half of that loop is exactly Module 9's evaluation discipline.
 
 ---
 

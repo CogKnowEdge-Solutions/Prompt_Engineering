@@ -153,7 +153,39 @@ flowchart LR
 
 ---
 
-## 4.5 Choosing a Reasoning Technique
+## 4.5 Verification Prompting (Self-Verification)
+
+The reasoning techniques above make the model *produce* an answer. Verification prompting adds a second step: make the model *critique its own draft* before finalizing.
+
+**Why it differs from self-consistency:** self-consistency (4.2) filters *random* errors by taking a majority vote across independent runs. Verification targets *systematic* errors — biases, skipped constraints, uncritical assumptions — that would survive a vote because every run makes the same mistake.
+
+```
+Step 1 (draft): Generate an answer as normal.
+Step 2 (verify): Before answering, explain why this draft is correct.
+Step 3 (critique): Then identify any errors, gaps, or unverified claims.
+Step 4 (finalize): Produce the corrected final answer, or repair the draft
+                 to address the critique.
+```
+
+**Example:**
+```
+Task: Write a 3-sentence summary of this article, with no plot spoilers.
+Draft candidate response: ... (model writes its attempt)
+Verification prompt:
+  Critique this draft before finalizing:
+  1. Is it exactly 3 sentences? If not, note the violation.
+  2. Does it contain any plot spoilers? Quote the offending sentence.
+  3. Does it capture the article's main point?
+  Then produce the corrected, final 3-sentence summary.
+```
+
+Implementations vary by model: some expose an explicit checkchain or revision mode, others just respond to the extra verification instructions in the prompt. Even a cheap "check your own work" instruction catches a meaningful share of constraint violations (like length) that a single pass silently misses.
+
+**When to use it:** constraint-heavy outputs (length, tone, format), critical single requests where you want a checked answer but self-consistency's multiple runs cost too much, and as a poor-man's structured-output check when you can't use API schema enforcement.
+
+---
+
+## 4.6 Choosing a Reasoning Technique
 
 ```mermaid
 flowchart TD
@@ -192,6 +224,8 @@ A simple way to decide, roughly in order of increasing cost:
 
 The common mistake is reaching for the most powerful (and expensive) technique by default. Match the technique to how much the task actually needs — most everyday tasks only need plain CoT, if that.
 
+**When reasoning backfires:** none of these techniques help if the model's underlying knowledge is wrong. Reasoning can even *entrench* a mistake — the model builds a convincing-sounding chain around a false premise, and looks more confident while being just as wrong. CoT-style techniques are buying accuracy on multi-step tasks with known-correct facts; they don't fix hallucination on facts the model never knew. For facts, that's what retrieval (Module 2) and verification (Module 9) are for.
+
 ---
 
 ## Key Takeaways
@@ -202,3 +236,4 @@ The common mistake is reaching for the most powerful (and expensive) technique b
 4. **Least-to-most is the cheap middle ground** — Breaks problems down without branching
 5. **Cost scales with power** — Match technique to task complexity
 6. **Don't default to the most expensive** — Most tasks need only plain CoT
+7. **Verify before finalizing** — A self-critique pass catches skipped constraints and one-sided answers

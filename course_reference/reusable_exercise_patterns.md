@@ -11,9 +11,9 @@ Every module's Exercises and Challenge files draw from the same small set of exe
 | # | Pattern | What it tests | Used in |
 |---|---------|---------------|---------|
 | 1 | Fill-in-the-Pattern | Applying a structural template to a new situation | Modules 1, 2, 5, 6 |
-| 2 | Fix-the-Prompt | Diagnosing why a prompt fails before rewriting it | Modules 1, 3 |
+| 2 | Fix-the-Prompt | Diagnosing why a prompt fails before rewriting it | Modules 1, 3, 4 |
 | 3 | Before/After Comparison | Attributing an output change to a specific technique | Modules 2, 4, 10 |
-| 4 | Constraint Challenge | Precision against checkable format/length/content rules | Modules 3, 6 |
+| 4 | Constraint Challenge | Precision against checkable format/length/content rules | Modules 3, 6, 7 |
 | 5 | Red-Team / Patch Pair | The full attack-diagnose-patch-verify cycle | Module 8; Module 11 capstone (Red-Team Report) |
 | 6 | Rubric Scoring | Evaluation: judging output quality against a rubric | Module 9; Module 11 capstone (Eval Report) |
 | 7 | From Scratch | Synthesis: selecting and combining techniques unprompted | Module 5; most module Challenges |
@@ -36,7 +36,7 @@ Every module's Exercises and Challenge files draw from the same small set of exe
 
 **What it tests:** Diagnostic skill — can the learner name *why* something fails before fixing it, rather than producing a better-sounding version by instinct.
 
-**Used in:** Modules 1, 3.
+**Used in:** Modules 1, 3, 4.
 
 ---
 
@@ -56,7 +56,7 @@ Every module's Exercises and Challenge files draw from the same small set of exe
 
 **What it tests:** Precision — many prompts fail not on quality but on missing an explicit, checkable requirement.
 
-**Used in:** Modules 3, 6.
+**Used in:** Modules 3, 6, 7.
 
 ---
 

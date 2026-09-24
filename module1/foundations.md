@@ -94,19 +94,26 @@ Tokens are the basic units LLMs process. A token is NOT the same as a word.
 - Punctuation counts as tokens
 - Whitespace counts as tokens
 
+**Try it — estimate token cost:**
+1. Write a ~200-word paragraph on any topic.
+2. Guess how many tokens it is, then count exactly with a tokenizer (your model provider's docs/tool, or `tiktoken` for OpenAI-style counts).
+3. Repeat with a short code snippet of similar length. Note how code and unusual words typically cost more tokens than everyday prose.
+
 ---
 
 ### Context Window
 
 **Definition**: The maximum number of tokens an LLM can process in a single interaction (input + output combined).
 
-**Common context window sizes:**
-| Model | Context Window |
+**Common context window sizes ([verify current figures at your provider's docs](https://platform.openai.com/docs)):**
+| Model family (2026) | Context Window |
 |-------|----------------|
-| GPT-3.5 | 4,096 tokens |
-| GPT-4 | 8,192 - 128,000 tokens |
-| Claude 3 | 200,000 tokens |
-| Gemini 1.5 | 1,000,000 tokens |
+| GPT-4o / GPT-4.1 class | 128,000 - 1,000,000 tokens |
+| GPT-5.x / o-series | 400,000 - 1,000,000 tokens |
+| Claude 4.x (Opus / Sonnet) | 200,000 - 1,000,000 tokens |
+| Gemini 2.5 / 3.x | 1,000,000 - 2,000,000 tokens |
+
+**Important caveat:** an advertised window is not a guarantee of full usable quality. Benchmarking shows models typically use only about 50-65% of their advertised context effectively — beyond that, accuracy on details in the middle of the prompt drops off. A huge window doesn't mean you should fill it; it usually means you *can*, at extra cost.
 
 **What happens when you exceed the context window?**
 - The model truncates (cuts off) earlier text
@@ -198,7 +205,7 @@ Always suggest improvements and mention edge cases.
 
 | Temperature | Behavior | Best For |
 |-------------|----------|----------|
-| 0.0 | Deterministic, same output every time | Code, factual answers, consistent formatting |
+| 0.0 | Highly repeatable (near-identical, not byte-guaranteed) | Code, factual answers, consistent formatting |
 | 0.3 | Mostly predictable, slight variation | Summaries, explanations |
 | 0.7 | Balanced creativity and coherence | General writing, brainstorming |
 | 1.0 | Creative, varied outputs | Creative writing, diverse ideas |
@@ -218,6 +225,8 @@ temperature=1.0  # More creative variation
 ```
 
 **Note**: Not all platforms expose temperature. Some use "creativity" sliders.
+
+**Note**: Temperature is a sampling control, not a correctness dial. Even at 0.0 the model is not guaranteed to produce byte-identical output across runs or model versions (Module 7 covers this in depth); the *quality of the prompt* is what actually determines whether the answer is right.
 
 ---
 
@@ -272,9 +281,27 @@ With temperature=1.0 → Likely "Paris" but could vary
 
 **Key implications:**
 - First tokens heavily influence later tokens
-- Good开头 (beginning) = better output
+- Good beginning = better output
 - Repetition can occur if model gets stuck in loops
 - Long outputs may lose coherence
+
+---
+
+### Multimodal Prompts (Text + Image / Audio / Video)
+
+Many modern models accept more than text. Your prompt can include images (screenshots, diagrams, photos), audio (voice notes, call segments), and sometimes video or long documents — alongside your instructions. The same principles apply, with extra care:
+
+| Modality | What it enables | Extra care needed |
+|----------|-----------------|-------------------|
+| Image | "Fix the error in this screenshot", "describe this chart" | The model reads pixels, not text — make sure the image is legible and relevant |
+| Audio | Transcribing and analyzing a call or meeting | Speech-to-text quality shapes the result; verify transcripts |
+| Video / PDF / document | Answering questions about long or multimodal files | Large files consume lots of context — chunk or summarize (see Context Window) |
+
+**Tips for multimodal prompts:**
+1. **State what you want the model to do with the content** — "This screenshot shows a Python error on line 15. Fix it" beats just pasting the screenshot.
+2. **Reference specific regions** — "the header chart", "the red error banner" — to focus the model's attention.
+3. **Keep the task in text** — the image/content carries data, the text carries the instruction.
+4. **Watch token cost** — images and long files are token-expensive; crop, compress, and trim where you can.
 
 ---
 

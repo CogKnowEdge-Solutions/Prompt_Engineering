@@ -107,6 +107,25 @@ flowchart LR
 
 Steps 1-2 are usually free and automated. Step 3 is where the real QA lives.
 
+**Illustrative check** (conceptual — adapt to your stack):
+
+```python
+import json
+
+output = model_response                      # from your API call
+data = json.loads(output)                    # 1. Format check (fails fast)
+
+required = {"order_id", "customer_email"}    # 2. Schema check
+assert required <= set(data), f"missing {required - set(data)}"
+
+if data["sentiment"] not in {"POSITIVE", "NEGATIVE", "NEUTRAL", "UNKNOWN"}:
+    raise ValueError(data["sentiment"])      # 3. Semantic check: value in allowed set
+if len(str(data["order_id"])) not in (8, 9):
+    raise ValueError("order_id looks malformed")
+```
+
+Write these as unit tests in your CI (Module 9's sanity checks) so a release with a broken extraction fails fast instead of silently corrupting data.
+
 ---
 
 ## 6.5 Few-Shot for Structured Extraction
@@ -154,6 +173,32 @@ The explicit fallback rule + a few-shot example demonstrating it (6.5) is the st
 
 ---
 
+## 6.7 Beyond JSON: Function Calling & Other Structured Formats
+
+JSON is the most common structured output, but it isn't the only one — and JSON isn't always the best tool for the job.
+
+### Function / tool calling
+
+Most major providers offer **function calling**: you register a function (name, description, JSON parameter schema), and the model returns a *call to that function* with arguments instead of free-form text.
+
+- **What it's really for:** connecting the model to your code — "call `place_order(order_id=..., amount=...)`". Structured output gives you data back; tool calling gives you *an action to execute*.
+- **Two-step pattern:** step one the model returns `name` + `arguments`; step two *your* code validates and executes the call. The tool call is a *request to run code*, never a bypass of your own validation (Link to Module 8: this is also the injection surface you must guard).
+- **When to use it over JSON mode:** you actually want to *do* something (search, write, mutate state), or you're building an agent. If you only want data back, plain structured output is simpler.
+
+### Format rainbow: when JSON is the wrong default
+
+| Format | Best when | Caveats |
+|--------|-----------|---------|
+| **JSON** | Nested data, programmatic consumption | Verbose for humans; order/clarity matter |
+| **CSV / TSV** | Tables, spreadsheets, bulk pipelines | Fragile with erratic quotes, commas in values, or multiline cells |
+| **YAML** | Config, human-edited files, most readable | Nested indent mistakes silently fail; some parsers accept insecure types |
+| **Plain Markdown / tables** | Human-facing reports, docs | Never feed it to a parser expecting a structured format without strict checks |
+| **XML** | High-fidelity interchange with existing systems | Verbose; needs explicit formatting rules to stay well-formed |
+
+**The discipline carries over from 6.4:** whichever format you pick, conformance (it parses, it matches the shape) is separate from correctness (the values are right). Validate both. Function calls especially — validate the *arguments against your own rules* before executing, even when the call itself is schema-valid.
+
+---
+
 ## Key Takeaways
 
 1. **Format reliability matters in production** — free text fails to parse far too often
@@ -162,3 +207,4 @@ The explicit fallback rule + a few-shot example demonstrating it (6.5) is the st
 4. **Schema conformance ≠ correctness** — always keep semantic validation separate
 5. **Few-shot beats verbose instructions** — demonstrated examples outperform prose
 6. **Decide missing-data policy upfront** — `null` or `"unknown"`, never invention
+7. **Pick the format that fits the consumer** — JSON isn't always right; validate conformance and correctness in every one

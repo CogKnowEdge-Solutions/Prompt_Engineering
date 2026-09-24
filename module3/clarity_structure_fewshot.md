@@ -141,11 +141,37 @@ Output the category only, no explanation.
 
 ---
 
+## 3.7 Markdown Formatting & Structural Ordering
+
+### Markdown as structure
+
+Models are trained on enormous amounts of Markdown, so simple Markdown scaffolding often works as well as XML tags — headings, bold labels, lists, and code-fenced blocks act as weak delimiters. A good rule of thumb:
+
+- **Short, simple prompts** → Markdown headings or bold labels (`**Instructions:**`) — minimal overhead
+- **Longer, multi-part prompts** → XML-style tags; they're more explicit about boundaries
+- **Don't blend styles mid-prompt** — pick one convention and stay consistent throughout
+
+### Structural ordering for long prompts
+
+For a prompt with many parts, a consistent order reduces confusion (for the model, and for whoever maintains the prompt later):
+
+1. **System/role** instructions (persistent behavior) first
+2. **Context** the model needs (what's happening, prior state, real-world constraints)
+3. **The instructions** — the actual task, stated clearly
+4. **Few-shot examples** (if any), each demonstrating the pattern
+5. **The specific input/question** — last, so it's nearest the model's generation window
+
+The broad principle: *how you want the model to behave comes earliest; what it should act on comes last.*
+
+---
+
 ## Key Takeaways
 
 1. **Structure prevents confusion** — Model needs to know where instructions end and data begins
 2. **Simple delimiters work for simple prompts** — `"""`, `---`, or `< >`
 3. **XML tags work for complex prompts** — Named tags are more reliable
-4. **Don't over-structure** — Short prompts don't need tags
-5. **Diverse examples beat many similar ones** — Quality over quantity
-6. **Match your example format to desired output** — Model mirrors your structure
+4. **Markdown works for short prompts** — Headings/bold labels are valid structure too
+5. **Don't over-structure** — Short prompts don't need tags
+6. **Order long prompts consistently** — behavior first, specific input last
+7. **Diverse examples beat many similar ones** — Quality over quantity
+8. **Match your example format to desired output** — Model mirrors your structure
