@@ -3,10 +3,27 @@
 ## Course Overview
 A comprehensive course on mastering the art and science of prompt engineering for Large Language Models (LLMs) — from foundational prompting through advanced techniques, structured output, security, evaluation, iteration workflow, and a capstone project.
 
+## Learning Path
+
+The eleven modules live in seven numbered folders, one per group. Module numbers are unchanged from the original course sequence — the folders are the recommended route through them, and every prerequisite still resolves to the same or an earlier group.
+
+| Group | Folder | Modules | What you gain |
+|-------|--------|---------|---------------|
+| **1. Foundations & the Toolkit** | [`01_foundations_and_toolkit/`](./01_foundations_and_toolkit/) | 1, 2 | How models read prompts, plus a map of every technique available |
+| **2. Structuring Prompts & Outputs** | [`02_structuring_prompts_and_outputs/`](./02_structuring_prompts_and_outputs/) | 3, 6 | Shape the input (delimiters, XML, few-shot) and the output (schemas, JSON) |
+| **3. Reasoning & Role** | [`03_reasoning_and_role/`](./03_reasoning_and_role/) | 4, 5 | Elicit step-by-step reasoning, and set role and context deliberately |
+| **4. Model Configuration & Hyperparameters** | [`04_model_configuration_and_hyperparameters/`](./04_model_configuration_and_hyperparameters/) | 7 | The one lever that isn't the prompt: sampling, length, cost |
+| **5. Prompt Security** | [`05_prompt_security/`](./05_prompt_security/) | 8 | Injection, jailbreaking, and defensive design |
+| **6. Testing & Maintaining Prompts** | [`06_testing_and_maintaining_prompts/`](./06_testing_and_maintaining_prompts/) | 9, 10 | Prove a prompt works, then manage it as a versioned artifact |
+| **7. Capstone Project** | [`07_capstone_project/`](./07_capstone_project/) | 11 | Integrate everything into one shippable prompt system |
+
+`course_reference/` sits alongside the groups and applies to all of them.
+
 ## Course Structure
+Listed by module number. Each module lives inside its group's folder — see [Learning Path](#learning-path) above for the order to study them in.
 
 ### Module 1: Foundations
-**Folder:** `module1/`
+**Folder:** `01_foundations_and_toolkit/module1/`
 **Files:** `foundations.md`, `lab.md`, `exercises_and_challenges.md`, `QUICK_START.md`
 **Topics:**
 - What is Prompt Engineering? How LLMs process prompts
@@ -15,7 +32,7 @@ A comprehensive course on mastering the art and science of prompt engineering fo
 - Exercises: Fill-in-the-pattern, Fix-the-prompt
 
 ### Module 2: Prompting Techniques Taxonomy
-**Folder:** `module2/`
+**Folder:** `01_foundations_and_toolkit/module2/`
 **Files:** `techniques_taxonomy.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Zero-shot, few-shot, and chain-of-thought (CoT) prompting
@@ -23,63 +40,63 @@ A comprehensive course on mastering the art and science of prompt engineering fo
 - Choosing and combining techniques
 
 ### Module 3: Clarity, Structure & Few-Shot
-**Folder:** `module3/`
+**Folder:** `02_structuring_prompts_and_outputs/module3/`
 **Files:** `clarity_structure_fewshot.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Delimiters and XML tags, when structure doesn't help
 - Designing good few-shot examples, structure + examples together
 
 ### Module 4: Reasoning Techniques
-**Folder:** `module4/`
+**Folder:** `03_reasoning_and_role/module4/`
 **Files:** `reasoning_techniques.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - CoT revisited, self-consistency, tree-of-thought, least-to-most
 - Choosing the right reasoning technique
 
 ### Module 5: Role & Context Setting
-**Folder:** `module5/`
+**Folder:** `03_reasoning_and_role/module5/`
 **Files:** `role_and_context.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - How role prompting works, the mixed research, over-trust risk
 - Practical guidelines for roles, context beyond roles, when to skip the persona
 
 ### Module 6: Output Control & Structured Data
-**Folder:** `module6/`
+**Folder:** `02_structuring_prompts_and_outputs/module6/`
 **Files:** `output_control_and_structured_data.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Schema-first prompting, JSON mode / structured outputs
 - Few-shot for extraction, handling missing or ambiguous data
 
 ### Module 7: Hyperparameters & Model Configuration
-**Folder:** `module7/`
+**Folder:** `04_model_configuration_and_hyperparameters/module7/`
 **Files:** `hyperparameters_and_config.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Randomness/sampling, length & repetition controls
 - Reproducibility, performance & cost, putting it together
 
 ### Module 8: Prompt Security — Injection & Jailbreaking
-**Folder:** `module8/`
+**Folder:** `05_prompt_security/module8/`
 **Files:** `prompt_security.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Direct vs. indirect injection, the full threat landscape
 - Case studies (EchoLeak, GitHub Copilot) — defensive design patterns
 
 ### Module 9: Prompt Evaluation
-**Folder:** `module9/`
+**Folder:** `06_testing_and_maintaining_prompts/module9/`
 **Files:** `prompt_evaluation.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Golden datasets, LLM-as-a-judge, production evaluation pipeline
 - A/B testing, reproducibility, metrics that matter
 
 ### Module 10: Iteration Workflow
-**Folder:** `module10/`
+**Folder:** `06_testing_and_maintaining_prompts/module10/`
 **Files:** `iteration_workflow.md`, `lab.md`, `exercises_and_challenges.md`
 **Topics:**
 - Prompts as versioned artifacts, staged deployment
 - Tying in evaluation (M9) and security (M8), a practical iteration loop
 
 ### Module 11: Capstone Project
-**Folder:** `module11/`
+**Folder:** `07_capstone_project/module11/`
 **Files:** `overview.md`, `track_options.md`, `deliverable_requirements.md`, `submission_checklist.md`, `project_roadmap.md`
 **Topics:**
 - Build one complete prompt system end-to-end (pick a track or propose your own)
@@ -94,7 +111,7 @@ A comprehensive course on mastering the art and science of prompt engineering fo
 ## How to Use This Course
 
 ### For Self-Learners:
-1. Start with Module 1 and work sequentially
+1. Start with Module 1 and work through the groups in order (1+2 → 3+6 → 4+5 → 7 → 8 → 9+10)
 2. Complete all labs and exercises
 3. Attempt challenges before checking your reasoning against the prompts
 4. Finish with the Module 11 capstone to integrate everything
@@ -129,7 +146,7 @@ Each module (1-10) contains:
 - **exercises_and_challenges.md**: Practice problems + advanced challenge
 - **QUICK_START.md** (Module 1 only): Fast entry point
 
-The capstone (`module11/`) uses a project structure instead:
+The capstone (`07_capstone_project/module11/`) uses a project structure instead:
 - **overview.md**: The four deliverables at a glance
 - **track_options.md**: Track A / B / C or propose your own
 - **deliverable_requirements.md**: Detailed per-deliverable requirements
@@ -144,8 +161,8 @@ The capstone (`module11/`) uses a project structure instead:
 
 ## Getting Started
 1. Clone or download this repository
-2. Start with `module1/QUICK_START.md` (then `module1/foundations.md`)
-3. Follow the module structure in order
+2. Start with `01_foundations_and_toolkit/module1/QUICK_START.md` (then `01_foundations_and_toolkit/module1/foundations.md`)
+3. Follow the learning path in order — Groups 1 through 6, then the Module 11 capstone
 4. Complete all activities, then finish with the Module 11 capstone
 
 ## Contributing

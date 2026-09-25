@@ -2,7 +2,7 @@
 
 ```
 Prompt_Engineering/
-├── README.md                    # Main course overview
+├── README.md                    # Main course overview + learning path
 ├── course_structure.md          # This file
 │
 ├── course_reference/                     # Course-wide reference
@@ -11,63 +11,73 @@ Prompt_Engineering/
 │   ├── prompt_writing_cheatsheet.md      # One-page reference condensing Modules 1-10
 │   └── tooling.md                        # Index of red-teaming and evaluation tools
 │
-├── module1/                     # Module 1: Foundations
-│   ├── QUICK_START.md           # Fast entry point (Module 1 only)
-│   ├── foundations.md           # Lesson notes
-│   ├── lab.md                   # Lab activity
-│   └── exercises_and_challenges.md       # Practice + challenge
+├── 01_foundations_and_toolkit/           # Group 1: Foundations & the Toolkit
+│   ├── README.md                         # Group overview and module order
+│   ├── module1/                          # Module 1: Foundations
+│   │   ├── QUICK_START.md                # Fast entry point (Module 1 only)
+│   │   ├── foundations.md                # Lesson notes
+│   │   ├── lab.md                        # Lab activity
+│   │   └── exercises_and_challenges.md   # Practice + challenge
+│   └── module2/                          # Module 2: Prompting Techniques Taxonomy
+│       ├── techniques_taxonomy.md
+│       ├── lab.md
+│       └── exercises_and_challenges.md
 │
-├── module2/                     # Module 2: Prompting Techniques Taxonomy
-│   ├── techniques_taxonomy.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
+├── 02_structuring_prompts_and_outputs/   # Group 2: Structuring Prompts & Outputs
+│   ├── README.md
+│   ├── module3/                          # Module 3: Clarity, Structure & Few-Shot
+│   │   ├── clarity_structure_fewshot.md
+│   │   ├── lab.md
+│   │   └── exercises_and_challenges.md
+│   └── module6/                          # Module 6: Output Control & Structured Data
+│       ├── output_control_and_structured_data.md
+│       ├── lab.md
+│       └── exercises_and_challenges.md
 │
-├── module3/                     # Module 3: Clarity, Structure & Few-Shot
-│   ├── clarity_structure_fewshot.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
+├── 03_reasoning_and_role/                # Group 3: Reasoning & Role
+│   ├── README.md
+│   ├── module4/                          # Module 4: Reasoning Techniques
+│   │   ├── reasoning_techniques.md
+│   │   ├── lab.md
+│   │   └── exercises_and_challenges.md
+│   └── module5/                          # Module 5: Role & Context Setting
+│       ├── role_and_context.md
+│       ├── lab.md
+│       └── exercises_and_challenges.md
 │
-├── module4/                     # Module 4: Reasoning Techniques
-│   ├── reasoning_techniques.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
+├── 04_model_configuration_and_hyperparameters/   # Group 4
+│   ├── README.md
+│   └── module7/                          # Module 7: Hyperparameters & Model Configuration
+│       ├── hyperparameters_and_config.md
+│       ├── lab.md
+│       └── exercises_and_challenges.md
 │
-├── module5/                     # Module 5: Role & Context Setting
-│   ├── role_and_context.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
+├── 05_prompt_security/                   # Group 5: Prompt Security
+│   ├── README.md
+│   └── module8/                          # Module 8: Prompt Security — Injection & Jailbreaking
+│       ├── prompt_security.md
+│       ├── lab.md
+│       └── exercises_and_challenges.md
 │
-├── module6/                     # Module 6: Output Control & Structured Data
-│   ├── output_control_and_structured_data.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
+├── 06_testing_and_maintaining_prompts/   # Group 6: Testing & Maintaining Prompts
+│   ├── README.md
+│   ├── module9/                          # Module 9: Prompt Evaluation
+│   │   ├── prompt_evaluation.md
+│   │   ├── lab.md
+│   │   └── exercises_and_challenges.md
+│   └── module10/                         # Module 10: Iteration Workflow
+│       ├── iteration_workflow.md
+│       ├── lab.md
+│       └── exercises_and_challenges.md
 │
-├── module7/                     # Module 7: Hyperparameters & Model Configuration
-│   ├── hyperparameters_and_config.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
-│
-├── module8/                     # Module 8: Prompt Security — Injection & Jailbreaking
-│   ├── prompt_security.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
-│
-├── module9/                     # Module 9: Prompt Evaluation
-│   ├── prompt_evaluation.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
-│
-├── module10/                    # Module 10: Iteration Workflow
-│   ├── iteration_workflow.md
-│   ├── lab.md
-│   └── exercises_and_challenges.md
-│
-└── module11/                    # Module 11: Capstone Project (deliverable-based)
-    ├── overview.md              # The four deliverables at a glance
-    ├── track_options.md         # Track A / B / C or propose your own
-    ├── deliverable_requirements.md      # Detailed per-deliverable requirements
-    ├── submission_checklist.md  # Self-review checklist and grading rubric
-    └── project_roadmap.md       # Suggested timeline, milestones, worked example
+└── 07_capstone_project/                  # Group 7: Capstone Project (deliverable-based)
+    ├── README.md
+    └── module11/                         # Module 11: Capstone Project
+        ├── overview.md                   # The four deliverables at a glance
+        ├── track_options.md              # Track A / B / C or propose your own
+        ├── deliverable_requirements.md   # Detailed per-deliverable requirements
+        ├── submission_checklist.md       # Self-review checklist and grading rubric
+        └── project_roadmap.md            # Suggested timeline, milestones, worked example
 ```
 
 ## File Descriptions
@@ -81,6 +91,9 @@ Prompt_Engineering/
 - **glossary.md**: Course-wide glossary of terms, each cross-referenced to the module covering it.
 - **prompt_writing_cheatsheet.md**: One-page prompt-writing reference condensing Modules 1-10 (anatomy, technique picker, structure, roles, structured output, hyperparameters, security, evaluation, iteration).
 - **tooling.md**: Index of red-teaming tools (garak, PyRIT, Giskard) and evaluation frameworks (promptfoo, OpenAI Evals, LangSmith, DeepEval, Braintrust, Phoenix), with picking conventions.
+
+### Group Level (`01_...` through `07_...`)
+Each group folder holds a `README.md` with the group overview and the recommended module order, plus the `moduleN/` folders it contains.
 
 ### Module Level (Modules 1-10)
 - **Topic-named lesson file** (renamed from `concepts.md` — e.g., `foundations.md`, `prompt_security.md`): Lesson notes and Key Takeaways for the module
@@ -96,6 +109,20 @@ Prompt_Engineering/
 - **project_roadmap.md**: Suggested 4-week/2-week timeline with milestone gates, and an anonymized worked example to calibrate scope
 
 ## Course Progression
+
+Modules are taught in seven numbered group folders. Module numbers and file names are unchanged; the grouping is the recommended route through them.
+
+| Group | Folder | Modules |
+|-------|--------|---------|
+| **1. Foundations & the Toolkit** | `01_foundations_and_toolkit/` | 1, 2 |
+| **2. Structuring Prompts & Outputs** | `02_structuring_prompts_and_outputs/` | 3, 6 |
+| **3. Reasoning & Role** | `03_reasoning_and_role/` | 4, 5 |
+| **4. Model Configuration & Hyperparameters** | `04_model_configuration_and_hyperparameters/` | 7 |
+| **5. Prompt Security** | `05_prompt_security/` | 8 |
+| **6. Testing & Maintaining Prompts** | `06_testing_and_maintaining_prompts/` | 9, 10 |
+| **7. Capstone Project** | `07_capstone_project/` | 11 |
+
+No group boundary splits a dependency — each module's prerequisite falls in its own group or an earlier one. Per-module detail follows.
 
 ### Module 1: Foundations
 - **Goal**: Understand how LLMs process prompts
@@ -155,7 +182,7 @@ Prompt_Engineering/
 ## Usage Tips
 
 ### For Learning:
-1. Follow modules in order (1 → 11)
+1. Work through the groups in order (1+2 → 3+6 → 4+5 → 7 → 8 → 9+10 → 11)
 2. Complete all activities in each module
 3. Attempt challenges and evaluations before looking at any model suggestions
 4. Use `course_reference/reusable_exercise_patterns.md` to understand what each exercise type is testing
